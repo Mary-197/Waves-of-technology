@@ -70,14 +70,6 @@ const Navbar: React.FC = () => {
             </Link>
           </li>
           <li className="item-menu">
-            <Link to="/resultado">
-              <span className="icon">
-                <i className="bi bi-droplet-half"></i>
-              </span>
-              <span className="txt-link">Resultado</span>
-            </Link>
-          </li>
-          <li className="item-menu">
             <a href="/quiz" onClick={handleQuizClick}>
               <span className="icon">
                 <i className="bi bi-question-circle-fill"></i>
