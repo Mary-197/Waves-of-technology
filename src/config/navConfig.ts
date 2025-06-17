@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { NavEntry } from './menutypes';
+=======
+import { NavEntry } from './menuTypes';
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
 
 
 /**

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from './components/Navbar';
@@ -37,6 +38,22 @@ function App() {
         </main>
       </AuthProvider>
     </Router>
+=======
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login/Login';
+import Cadastro from './pages/Cadastro/Cadastro';
+import Home from './pages/Home/Home';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
   );
 }
 

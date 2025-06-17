@@ -1,0 +1,59 @@
+/* src/components/Nav/Nav.css */
+
+.nav {
+    grid-area: nav;
+    display: flex;
+    align-items: center;
+    gap: var(--gutter);
+    padding: calc(var(--gutter)/2) var(--gutter);
+    background: var(--color-secondary);
+    color: var(--gray-light);
+    position: sticky;
+    top: var(--header-height);
+    z-index: 999;
+  }
+  
+  /* agrupa os links à esquerda */
+  .nav-links {
+    display: flex;
+    gap: var(--gutter);
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;           /* espaço entre ícone e texto */
+    text-decoration: none;
+    color: inherit;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+  
+  .nav-link-icon {
+    color: currentColor;   /* herda a cor do link */
+  }
+  
+  .nav-link-label {
+    font-weight: 500;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+  
+  .nav a:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  
+  /* mostra o path à direita */
+  .nav-path {
+    margin-left: auto;            /* empurra pro canto direito */
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--gray-light);
+  }
+  

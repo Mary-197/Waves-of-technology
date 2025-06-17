@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+<<<<<<< HEAD
 // src/main.tsx ou src/index.tsx
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
+=======
+import { AuthProvider } from './hooks/useAuth';
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,6 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
 
+<<<<<<< HEAD
   
     <App />
     
@@ -21,3 +26,15 @@ root.render(
 );
 
 reportWebVitals();
+=======
+    <AuthProvider>
+    <App />
+    </AuthProvider>
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f

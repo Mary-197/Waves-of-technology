@@ -18,8 +18,13 @@
     "frontend-livro-caixa": "file:",
     "lucide-react": "^0.488.0",
     "mysql2": "^3.14.1",
+<<<<<<< HEAD
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+=======
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
@@ -50,8 +55,13 @@
     ]
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
+=======
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
     "@types/react-router-dom": "^5.3.3"
   },
   "description": "Este projeto é uma aplicação frontend desenvolvida com o objetivo de gerenciar um livro caixa. Ele foi criado utilizando o [Create React App](https://github.com/facebook/create-react-app) e segue boas práticas de desenvolvimento com React.",
@@ -66,5 +76,10 @@
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/gracedbydkn/Waves-of-Technology/issues"
+<<<<<<< HEAD
   }
+=======
+  },
+  "homepage": "https://github.com/gracedbydkn/Waves-of-Technology#readme"
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
 }

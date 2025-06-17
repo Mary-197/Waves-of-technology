@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -268,10 +269,184 @@ html, body {
   display: flex;
   justify-content: center;
   flex-grow: 1;
+=======
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.topo-site {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #92C7FD;
+    /* Sombra para efeito 3D */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    /* Um leve gradiente para dar profundidade */
+    background: linear-gradient(145deg, #7bb1f9, #92c7fd);
+    border-radius: 0 0 15px 15px;
+    /* Leve relevo interno */
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+    position: relative;
+    z-index: 1;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(to bottom, #92C7FD, #cbe9ff, #ffff);
+    height: 100vh;
+
+}
+
+nav.menu-lateral {
+    padding-left: 0;
+    width: 70px;
+    height: 100%;
+    background-color: #92C7FD;
+    /* Já está certo */
+    padding: 40px 0 40px 1%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    transition: 0.5s;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+
+}
+
+nav.menu-lateral.expandir {
+    width: 300px;
+}
+
+.btn-expandir {
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn-expandir>i {
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+ul {
+    height: 100%;
+    list-style-type: none;
+    padding-left: 0;
+    /* remove padding do li */
+    margin-left: 0;
+    /* remove margem do li */
+}
+
+ul li.item-menu {
+    transition: 0.2s;
+    padding-left: 0;
+    /* remove padding do li */
+    margin-left: 0;
+    /* remove margem do li */
+}
+
+/* Estado normal */
+ul li.item-menu a {
+    margin-right: 20px;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px 10px;
+    /* margem interna igual para todos */
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    line-height: 40px;
+}
+
+/* Aplica o fundo branco ao item ativo inteiro (incluindo ícone e texto) */
+ul li.ativo {
+    background-color: white;
+    border-radius: 8px;
+    margin-left: 0; /* sem margem esquerda */
+    padding-left: 0; /* tira padding esquerdo para colar na borda */
+}  
+
+/* Estilo do link dentro do item ativo */
+ul li.ativo a {
+    color: #92C7FD;
+    font-weight: bold;
+    padding: 50px;
+
+}
+
+/* Estilo geral dos itens do menu */
+ul li.item-menu a {
+    padding-left: 15px;
+    /* sem espaço à esquerda */
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    color: black;
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 40px;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+
+ul li.item-menu a .icon>i {
+    margin-left: 0;
+    /* sem margem esquerda */
+    margin-right: 10px;
+    /* espaço entre ícone e texto */
+    font-size: 30px;
+}
+
+
+
+/* Texto escondido por padrão */
+ul li.item-menu a .txt-link {
+    margin-left: 70px;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+/* Quando o menu está expandido */
+nav.menu-lateral.expandir .txt-link {
+    margin-left: 40px;
+    opacity: 1;
+}
+
+/* Efeito hover */
+ul li.item-menu:hover {
+    background-color: #2b5dab;
+}
+
+ul li.item-menu:hover a {
+    color: white;
+}
+
+
+.topo-site {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Mantém o ícone afastado */
+    padding: 15px;
+    background-color: #92C7FD;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    /* Centraliza as logos */
+    flex-grow: 1;
+    /* Faz com que as logos ocupem o centro */
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
 }
 
 .logo1,
 .logo2 {
+<<<<<<< HEAD
   width: 120px;
   height: auto;
   margin: 0 10px;
@@ -447,4 +622,61 @@ ul li.ativo a {
     height: auto;
     position: relative;
   }
+=======
+    width: 120px;
+    height: auto;
+    margin: 0 5px;
+}
+
+.bi-person-circle {
+    font-size: 40px;
+    color: white;
+}
+
+
+
+/* css do texto do site*/
+
+
+.pagina {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+    color: #222;
+    line-height: 1.6;
+}
+
+.conteudo-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Texto agora ocupa cerca de 65–70% da largura */
+.texto {
+    flex: 1 1 65%;
+    min-width: 500px;
+}
+
+/* Imagem com largura menor */
+.imagem {
+    flex: 1 1 30%;
+    max-width: 450px;
+}
+
+.imagem img {
+    width: 300px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Parágrafo de apoio continua centralizado */
+.segundo-paragrafo {
+    margin-top: 40px;
+    font-size: 16px;
+    text-align: justify;
+>>>>>>> 5a616746e2ab16f71d663d28101d3d67e88a271f
 }
