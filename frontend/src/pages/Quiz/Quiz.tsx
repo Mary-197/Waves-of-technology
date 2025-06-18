@@ -1,94 +1,75 @@
-import React, { useState } from 'react';
-import './Quiz.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-interface Question {
-  question: string;
-  isPositive: boolean; // se "Sim" for uma boa prática
+interface Pergunta {
+    id: number;
+    pergunta: string;
 }
 
-const questions: Question[] = [
-  { question: 'Você costuma tomar banhos demorados (mais de 15 minutos)?', isPositive: false },
-  { question: 'Você fecha a torneira ao escovar os dentes?', isPositive: true },
-  { question: 'Costuma regar plantas ao meio-dia?', isPositive: false },
-  { question: 'Reaproveita água da chuva para limpar áreas externas?', isPositive: true },
-  { question: 'Deixa a torneira ligada enquanto ensaboa a louça?', isPositive: false },
-  { question: 'Utiliza máquina de lavar roupa só quando está cheia?', isPositive: true },
-  { question: 'Lava o carro com mangueira?', isPositive: false },
-  { question: 'Verifica e conserta vazamentos com frequência?', isPositive: true },
-  { question: 'Joga óleo de cozinha na pia?', isPositive: false },
-  { question: 'Utiliza redutores de vazão em torneiras e chuveiros?', isPositive: true },
-];
-
 const Quiz: React.FC = () => {
-  const [answers, setAnswers] = useState<(boolean | null)[]>(Array(10).fill(null));
-  const [submitted, setSubmitted] = useState(false);
+    const [perguntas, setPerguntas] = useState<Pergunta[]>([]);
+    const [respostas, setRespostas] = useState<{ [key: number]: string }>({});
+    const [mensagem, setMensagem] = useState("");
 
-  const handleSelect = (index: number, value: boolean) => {
-    const updated = [...answers];
-    updated[index] = value;
-    setAnswers(updated);
-  };
+    useEffect(() => {
+        const fetchPerguntas = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/quiz");
+                setPerguntas(response.data);
+            } catch (error) {
+                setMensagem("❌ Erro ao carregar as perguntas.");
+            }
+        };
+        fetchPerguntas();
+    }, []);
 
-  const handleSubmit = () => {
-    if (answers.includes(null)) {
-      alert('Responda todas as perguntas antes de enviar!');
-      return;
-    }
-    setSubmitted(true);
-  };
+    const handleRespostaChange = (id: number, valor: string) => {
+        const respostaFormatada = valor.toLowerCase();
+        if (respostaFormatada !== "sim" && respostaFormatada !== "não") {
+            setMensagem("❌ As respostas devem ser apenas 'Sim' ou 'Não'.");
+        } else {
+            setMensagem("");
+            setRespostas({ ...respostas, [id]: respostaFormatada });
+        }
+    };
 
-  const score = answers.reduce((acc, val, i) => {
-    return val === questions[i].isPositive ? acc + 1 : acc;
-  }, 0);
+    const handleEnviarRespostas = async () => {
+        try {
+            const respostasUsuario = Object.entries(respostas).map(([id, resposta]) => ({
+                id: Number(id),
+                resposta_usuario: resposta
+            }));
+            const response = await axios.post("http://localhost:3000/quiz/resposta", respostasUsuario);
+            setMensagem(response.data.mensagem);
+        } catch (error) {
+            setMensagem("❌ Erro ao enviar respostas.");
+        }
+    };
 
-  const feedback =
-    score >= 8
-      ? '🌟 Parabéns! Seus hábitos mostram grande consciência hídrica!'
-      : score >= 5
-      ? '👍 Você está no caminho certo, continue evoluindo!'
-      : '💧 Atenção! É hora de repensar seus hábitos para ajudar o planeta.';
-
-  return (
-    <div className="quiz-container">
-      <h2>💧 Quiz de Consumo Consciente</h2>
-      {questions.map((q, i) => (
-        <div key={i} className="card">
-          <p>{q.question}</p>
-          <div className="options">
-            <label className={answers[i] === true ? 'selected' : ''}>
-              <input
-                type="radio"
-                name={`q-${i}`}
-                onChange={() => handleSelect(i, true)}
-                disabled={submitted}
-              />
-              Sim
-            </label>
-            <label className={answers[i] === false ? 'selected' : ''}>
-              <input
-                type="radio"
-                name={`q-${i}`}
-                onChange={() => handleSelect(i, false)}
-                disabled={submitted}
-              />
-              Não
-            </label>
-          </div>
+    return (
+        <div>
+            <h1>Quiz</h1>
+            {mensagem && <p>{mensagem}</p>}
+            
+            {perguntas.length > 0 ? (
+                <div>
+                    {perguntas.map((pergunta) => (
+                        <div key={pergunta.id}>
+                            <p>{pergunta.pergunta}</p>
+                            <select onChange={(e) => handleRespostaChange(pergunta.id, e.target.value)}>
+                                <option value="">Selecione...</option>
+                                <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                            </select>
+                        </div>
+                    ))}
+                    <button onClick={handleEnviarRespostas}>Enviar Respostas</button>
+                </div>
+            ) : (
+                <p>Carregando perguntas...</p>
+            )}
         </div>
-      ))}
-      {!submitted && (
-        <button className="submit-button" onClick={handleSubmit}>
-          Enviar respostas
-        </button>
-      )}
-      {submitted && (
-        <div className="resultado">
-          <h3>{feedback}</h3>
-          <p>Você acertou {score} de {questions.length} perguntas.</p>
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default Quiz;

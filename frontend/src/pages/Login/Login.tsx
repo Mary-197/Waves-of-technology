@@ -1,31 +1,47 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
-import api from '../services/api';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Login.css";
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+const Login: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (email && senha) {
-      // Aqui você pode chamar `api.post(...)` futuramente
-      navigate('/home');
-    } else {
-      alert('Preencha todos os campos.');
+    setErro("");
+
+    if (!email || !senha) {
+      setErro("❌ Preencha todos os campos.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3001/login", { email, senha });
+
+      if (response.status === 200 && response.data.mensagem === "Login bem-sucedido!") {
+        navigate("/home");
+      } else {
+        setErro("❌ Usuário ou senha incorretos.");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setErro(`❌ Erro ao conectar ao servidor: ${error.message}`);
+      } else {
+        setErro("❌ Erro desconhecido.");
+      }
     }
   };
 
   return (
     <div>
-    
-
       <main className="container">
         <form onSubmit={handleSubmit}>
-          <h1>Login tech</h1>
+          <h1>Login Tech</h1>
+
+          {erro && <p className="error-message">{erro}</p>}
 
           <div className="input-box">
             <input
@@ -60,8 +76,8 @@ const Login = () => {
 
           <div className="register-link">
             <p>
-              Não tem uma conta? registre-se{' '}
-              <a onClick={() => navigate('/cadastro')} style={{ cursor: 'pointer' }}>
+              Não tem uma conta?{" "}
+              <a onClick={() => navigate("/cadastro")} style={{ cursor: "pointer" }}>
                 Cadastre-se
               </a>
             </p>

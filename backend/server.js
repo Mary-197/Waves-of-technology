@@ -1,69 +1,74 @@
-import express from 'express';
-import sqlite3 from 'sqlite3';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import bcrypt from 'bcrypt';
+import express from "express";
+import sqlite3 from "sqlite3";
+import { open } from "sqlite";
+import cors from "cors";
 
 const app = express();
-const port = 3002;
-const saltRounds = 10;
+app.use(express.json());
+app.use(cors()); // Permitir requisições do frontend
 
-app.use(cors());
-app.use(bodyParser.json());
+let db;
 
-const db = new sqlite3.Database('./usuarios.db');
-
-// Cria a tabela se não existir
-db.run(`CREATE TABLE IF NOT EXISTS usuarios (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  nome TEXT NOT NULL,
-  email TEXT UNIQUE NOT NULL,
-  idade INTEGER NOT NULL,
-  senha TEXT NOT NULL
-)`);
-
-// Cadastro (com idade e confirmação de senha)
-app.post('/cadastro', async (req, res) => {
-  try {
-    const { nome, email, idade, senha, confirmarSenha } = req.body;
-
-    if (!nome || !email || !idade || !senha || !confirmarSenha) {
-      return res.status(400).json({ erro: 'Todos os campos são obrigatórios!' });
-    }
-    
-    if (senha !== confirmarSenha) {
-      return res.status(400).json({ erro: 'As senhas não coincidem!' });
-    }
-
-    const senhaHash = await bcrypt.hash(senha, saltRounds);
-    db.run(`INSERT INTO usuarios (nome, email, idade, senha) VALUES (?, ?, ?, ?)`, [nome, email, idade, senhaHash], function (err) {
-      if (err) return res.status(400).json({ erro: 'Email já cadastrado ou erro ao cadastrar.' });
-      res.json({ mensagem: 'Usuário cadastrado com sucesso!' });
+// Inicializa o banco antes de aceitar requisições
+const initDB = async () => {
+    db = await open({
+        filename: "./database.db",
+        driver: sqlite3.Database,
     });
-  } catch (error) {
-    res.status(500).json({ erro: 'Erro interno no servidor' });
-  }
-});
 
-// Login
-app.post('/login', async (req, res) => {
-  try {
-    const { email, senha } = req.body;
-    if (!email || !senha) return res.status(400).json({ erro: 'Email e senha são obrigatórios!' });
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            senha TEXT NOT NULL
+        );
 
-    db.get(`SELECT * FROM usuarios WHERE email = ?`, [email], async (err, row) => {
-      if (err || !row) return res.status(401).json({ erro: 'Email não encontrado' });
+        CREATE TABLE IF NOT EXISTS quiz (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pergunta TEXT NOT NULL
+        );
+    `);
 
-      const senhaValida = await bcrypt.compare(senha, row.senha);
-      if (!senhaValida) return res.status(401).json({ erro: 'Senha incorreta' });
+    console.log("Banco de dados SQLite conectado!");
+};
 
-      res.json({ mensagem: 'Login bem-sucedido', usuario: { id: row.id, nome: row.nome, email: row.email, idade: row.idade } });
+// **Esperar a inicialização antes de registrar as rotas**
+initDB().then(() => {
+    app.post("/cadastro", async (req, res) => {
+        const { nome, email, senha } = req.body;
+        try {
+            await db.run(`INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)`, [nome, email, senha]);
+            res.json({ mensagem: "Usuário cadastrado com sucesso!" });
+        } catch (err) {
+            res.status(400).json({ erro: err.message });
+        }
     });
-  } catch (error) {
-    res.status(500).json({ erro: 'Erro interno no servidor' });
-  }
-});
 
-app.listen(port, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${port}`);
+    app.post("/login", async (req, res) => {
+        const { email, senha } = req.body;
+        try {
+            const usuario = await db.get(`SELECT * FROM usuarios WHERE email = ? AND senha = ?`, [email, senha]);
+            if (!usuario) return res.status(400).json({ erro: "Usuário ou senha incorretos!" });
+            res.json({ mensagem: "Login bem-sucedido!", usuario });
+        } catch (err) {
+            res.status(500).json({ erro: err.message });
+        }
+    });
+
+    app.get("/quiz", async (req, res) => {
+        try {
+            const perguntas = await db.all(`SELECT * FROM quiz`);
+            res.json(perguntas);
+        } catch (err) {
+            res.status(500).json({ erro: err.message });
+        }
+    });
+
+    const PORT = 3001;
+    app.listen(PORT, () => {
+        console.log(`Servidor rodando na porta ${PORT}`);
+    });
+}).catch((err) => {
+    console.error("Erro ao inicializar banco de dados:", err.message);
 });
