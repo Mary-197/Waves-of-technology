@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #92C7FD, #cbe9ff, #ffffff);
+}
+
+/* Header/Topo */
+header {
+  background: linear-gradient(145deg, #7bb1f9, #92c7fd);
+  padding: 10px 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 0 0 15px 15px;
+  height: 90px;
+  position: relative;
+}
+
+.header-content {
+  height: 100%;
+  position: relative;
+}
+
+/* Logo centralizadas */
+.logos {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+}
+
+.logo {
+  height: 70px;
+}
+
+/* Ícone de perfil */
+.perfil-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* Container principal do perfil */
+.perfil-container {
+  max-width: 900px;
+  margin: 60px auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+}
+
+.perfil-container h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #0c1d66;
+  margin-bottom: 40px;
+}
+
+/* Grade de inputs */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+/* Grupo de input */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.input-group label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #0c1d66;
+}
+
+.input-group input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d4d4d4;
+  background-color: #f8f8f8;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #92C7FD;
+  box-shadow: 0 0 0 2px rgba(146, 199, 253, 0.2);
+}
+
+/* Botão de editar */
+.edit-button {
+  margin-top: 20px;
+  background-color: #0c1d66;
+  color: #ffffff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #1a2d85;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .perfil-container {
+    padding: 30px 20px;
+  }
+
+  .edit-button {
+    width: 100%;
+  }
+}
